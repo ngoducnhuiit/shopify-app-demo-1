@@ -34,7 +34,7 @@ class InfiniteScrollController extends Controller
             $infinitiScrollConfig .= '"nextPagination": "'.$infiniteScroll->nextPagination.'",';
             $infinitiScrollConfig .= '"loadingText": "'.$infiniteScroll->loadingText.'",';
             $infinitiScrollConfig .= '"doneText": "'.$infiniteScroll->doneText.'",';
-            $infinitiScrollConfig .= '"image": "{{'.$infiniteScroll->image.'| asset_url}}",';
+            $infinitiScrollConfig .= '"image": "{{ "'.$infiniteScroll->image.'" | asset_url}}",';
             $infinitiScrollConfig .= '"loadMoreButtonText": "'.$infiniteScroll->loadMoreButtonText.'"';
             $infinitiScrollConfig .= "}</script>";
         // Data to pass to our rest api request - Dữ liệu để chuyển đến yêu cầu api còn lại của chúng tôi
