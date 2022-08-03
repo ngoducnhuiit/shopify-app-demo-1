@@ -1,5 +1,5 @@
 
-<form name="add-blog-post-form" id="add-blog-post-form"  enctype="multipart/form-data">
+<form name="add-blog-post-form" id="add-blog-post-form"   method="post" action="{{ url('infinitiscroll') }}"  enctype="multipart/form-data">
     @csrf
     <input type="hidden" class="config_id" name="config_id" value="{{ $infiniteScroll['id'] }}">
     <div class="form-group col-md-6">
@@ -40,7 +40,7 @@
     <div class="form-group col-md-6">
         <label for="load-image-placeholder">Loading Image placeholder :</label>
         @if($infiniteScroll['image'])
-        <img src="{{ url('tmp/uploads/'. $infiniteScroll['image']) }}" id="magepow_infinitescroll_general_loading_image_image" title="$infiniteScroll['image']"
+        <img src="{{ url('tmp/uploads/'. $infiniteScroll['image']) }}" id="magepow_infinitescroll_general_loading_image_image" title="{{ $infiniteScroll['image'] }}"
         alt="$infiniteScroll['image']" height="22" width="22" class="small-image-preview v-middle" >
         @endif
         <input type="file" class="form-control" id="load-image-placeholder" name="image" >
@@ -52,26 +52,3 @@
     </div>
     <button type="submit" class="btn btn-primary">Update New Config</button>
 </form>
-
-<script>
-    $(document).ready(function(){
-        $('#add-blog-post-form').submit(function(e){
-                e.preventDefault();
-                var url =  "{{ url('infinitiscroll') }}";
-                var dataJson = $(this).serializeArray();
-                $.ajax({
-                    url: url,
-                    dataType: "json",
-                    type: "POST",
-                    data: dataJson,
-                    success: function (data) {
-
-                    },
-                    error: function (xhr, exception) {
-
-                    }
-                });
-        });
-    });
-</script>
-

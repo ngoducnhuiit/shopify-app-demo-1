@@ -102,10 +102,11 @@ class InfiniteScrollController extends Controller
             $infiniteScroll->doneText = $request->doneText;
             $infiniteScroll->loadMoreButtonText = $request->loadMoreButtonText;
             $infiniteScroll->save();
-            return redirect('/infinitiscroll')->with('status', 'Blog Post Form Data Has Been inserted');
+
         }else{
             $this->update($request);
         }
+        return redirect('/infinitiscroll')->with('status', 'Blog Post Form Data Has Been inserted');
     }
 
 
@@ -116,7 +117,6 @@ class InfiniteScrollController extends Controller
 
     public function update(Request $request){
         $infiniteScroll =  InfiniteScroll::where('id', '=', $request->config_id);
-        $fileName = '';
         if($request->file('image')){
             $request->validate([
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -127,10 +127,11 @@ class InfiniteScrollController extends Controller
                 mkdir($path, 0777, true);
             }
             $file = $request->file('image');
-            $fileName = uniqid() . '_' . trim($file->getClientOriginalName());
-            $file->move($path, $fileName);
+            $this->image = uniqid() . '_' . trim($file->getClientOriginalName());
+            $file->move($path, $this->image);
+            $infiniteScroll->update(['image' => $this->image ]);
         }
-        $this->image = $fileName ? $fileName : $request->hidden_image;
+
         $infiniteScroll->update([
             'enabled' => $request->enabled,
             'delay' => $request->delay,
@@ -139,7 +140,6 @@ class InfiniteScrollController extends Controller
             'pagination' => $request->pagination,
             'nextPagination' => $request->nextPagination,
             'loadingText' => $request->loadingText,
-            'image' => $this->image,
             'doneText' => $request->doneText,
             'loadMoreButtonText' => $request->loadMoreButtonText,
         ]);
