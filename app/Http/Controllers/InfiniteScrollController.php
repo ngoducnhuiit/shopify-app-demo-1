@@ -39,7 +39,7 @@ class InfiniteScrollController extends Controller
             $infinitiScrollConfig .= "}</script>";
         // Data to pass to our rest api request - Dữ liệu để chuyển đến yêu cầu api còn lại của chúng tôi
             $infiniteScrollLiquid = file_get_contents(public_path('shopify-liquid/infiniti-scroll-config.liquid'), true);
-            $array = array('asset' => array('key' => 'snippets/infiniti-scroll-config.liquid', 'value' => $infinitiScrollConfig.$infiniteScrollLiquid));
+            $array = array('asset' => array('key' => 'snippets/infiniti-scroll-config.liquid', 'value' => "{% if request.page_type == 'collection' %}".$infinitiScrollConfig.$infiniteScrollLiquid."{% endif %}"));
             $shop->api()->rest('PUT', '/admin/themes/'.$themId.'/assets.json', $array);
 
             $image = file_get_contents(public_path('tmp/uploads/'.$infiniteScroll->image), true);
