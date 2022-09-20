@@ -8,5 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class InfiniteScroll extends Model
 {
     use HasFactory;
-    protected $table = "infinite_scrolls";
 }
